@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>(주)마이렌_사고 발생 위치 지도</title>
+</head>
+<body>
+    <div style="font-weight:bold;font-size:x-large; color:red; margin-bottom: 15px;">사고 발생 위치</div>
+	<div id="map" style="width:100%;height:100vh;"></div>
+
+	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=c14a134084bf6aded4037931208c1b11"></script>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+		        center: new kakao.maps.LatLng(37.5972633086813, 126.97680559831238), // 지도의 중심좌표
+		        level: 10, // 지도의 확대 레벨
+		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+		    }; 
+
+		// 지도를 생성한다 
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+        
+        var 데이터 = [
+            [37.330157573094304, 126.80138489624596, '<div style="padding:5px;">국연수 <br>사고발생</div>'],
+            [37.45031209351571, 126.78460711159106, '<div style="padding:5px;">최웅 <br>사고발생</div>'],
+            [37.64085089780833, 127.03932108275906, '<div style="padding:5px;">김지웅 <br>사고발생</div>']
+        ]
+
+        for (var i=0; i< 데이터.length;i++){
+            // 지도에 마커를 생성하고 표시한다
+            var marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(데이터[i][0], 데이터[i][1]), // 마커의 좌표
+            map: map // 마커를 표시할 지도 객체
+		    });
+
+             // 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+            content : 데이터[i][2] 
+            });
+
+            // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+            infowindow.open(map, marker); 
+
+        }
+
+	</script>
+</body>
+</html>
